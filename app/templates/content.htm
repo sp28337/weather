@@ -1,0 +1,70 @@
+{% extends "layout.htm" %}
+
+{% block content %}
+    <div class="slider-container">
+        <div class="slider-track">
+            <div class="slide">
+                <div class="currentWeatherInfo">
+                    <img class="gif" src="{{ icon | weather_svg }}">
+                    <div class="currentWeather">{{ current_weather }}</div>
+                    <div class="currentTemperature">{{ current_temperature }}°</div>
+                </div>
+                <ul class="weatherList">
+                    {% for day in week_forecast %}
+                    <li class="li">
+                        <img class="smallGif" src="{{ day['day']['condition']['icon'] }}">
+                        <div>{{ day['date'] | weekday_short }}</div>
+                        <div>{{ day['day']['maxtemp_c'] | int }}°</div>
+                        <div class="lowTemp">{{ day['day']['mintemp_c'] | int }}°</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="slide">
+                <div class="currentWeatherInfo --second">
+                    <div class="additionalInfo">
+                        <div class="row">
+                            <span>Wind</span><span>{{ (wind // 3.6) | int }} m/s</span>
+                        </div>
+                        <div class="row">
+                            <span>Humidity</span><span>{{ humidity }}%</span>
+                        </div>
+                        <div class="row">
+                            <span>Atm pressure</span><span>{{ pressure | int }} mmHg</span>
+                        </div>
+                        <div class="row">
+                            <span>Feels like</span><span>{{ feels_like | int}}°</span>
+                        </div>
+                        <div class="row">
+                            <span>Moonrise</span>
+                            <span>
+                                {{ moonrise | time_converter }}
+                            </span>
+                        </div>
+                        <div class="row">
+                            <span>Moonset</span>
+                            <span>
+                                {{ moonset | time_converter }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="weatherList">
+                {% for hour in day_forecast %}
+                    {% if current_time <= hour['time'] | handle_time and hour['time'] | handle_time < finish_time %}
+                        <li class="li">
+                            <img class="smallGif" src="{{ hour['condition']['icon'] }}">
+                            <div>{{ hour['time'] | set_time }}</div>
+                            <div>{{ hour['temp_c'] | int }}°</div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slider-controls">
+        <button class="dot first active"></button>
+        <button class="dot second"></button>
+    </div>
+{% endblock %}
