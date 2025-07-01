@@ -1,0 +1,126 @@
+@keyframes suggestionOn {
+    0% { transform: translateY(-20px); opacity: 0; }
+    100% { transform: translateY(0px); opacity: 1; }
+}
+
+.headerBackground {
+    position: fixed;
+    width: 100dvw;
+    z-index: 1;
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid var(--border);
+}
+
+.header {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+}
+
+.inputWrapper {
+    width: 100%;
+    display: flex;
+    gap: 15px;
+}
+
+.label {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    font-size: 42px;
+    white-space: nowrap;
+}
+
+.logo {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    height: 64px;
+    width: 64px;
+}
+
+.input {
+    font-size: 16px;
+    border: 1px solid var(--border);
+    padding: 5px 20px;
+    outline-width: 1.3px;
+    background: transparent;
+    color: white;
+    height: 45px;
+    border-radius: 12px;
+    width: 100%;
+}
+
+.input:focus {
+    border: 1px solid white;
+}
+
+.suggestions {
+    display: none;
+    overflow-y: auto;
+    max-height: 250px;
+    padding: 0 0 0 75px;
+    animation: suggestionOn 0.5s;
+}
+
+.suggestions li {
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.suggestions li:hover {
+    background-color: var(--row-hover);
+}
+
+.submitButton {
+    border-radius: 12px;
+    font-size: 16px;
+    padding: 5px 15px;
+    color: var(--white);
+    background-color: var(--submit-button);
+}
+
+.submitButton:hover {
+    background-color: var(--submit-button-hover);
+}
+
+.main {
+    text-align: center;
+    padding-top: 86px;
+    height: 100dvh;
+}
+
+.datetime {
+    font-size: 28px;
+    font-weight: 200;
+    margin-top: 20px;
+}
+
+.city {
+    font-size: 38px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 520px) {
+    .form {
+        gap: 7px;
+    }
+
+    .datetime {
+        font-size: 24px;
+    }
+
+    .city {
+        margin-bottom: 15px;
+        font-size: 34px;
+    }
+}

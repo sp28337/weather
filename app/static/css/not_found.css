@@ -1,0 +1,35 @@
+.wrapper {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.notFound {
+    font-size: 150px;
+    font-weight: 500;
+}
+
+.p {
+    text-align: center;
+}
+
+.link {
+    margin-top: 30px;
+    min-width: 100px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    font-size: 16px;
+    padding: 5px 15px;
+    color: var(--white);
+    background-color: var(--submit-button);
+    transition: .3s;
+}
+
+.link:hover {
+    background-color: var(--submit-button-hover);
+}

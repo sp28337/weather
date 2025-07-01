@@ -1,0 +1,16 @@
+{% extends "base.htm" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/variables.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/not_found.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/base.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ super() }}
+    <div class="wrapper">
+        <h1 class="notFound">404</h1>
+        <p class="p">{{ detail }}</p>
+        <a class="link" href="/">{{ link_title }}</a>
+    </div>
+{% endblock %}

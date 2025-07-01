@@ -1,0 +1,39 @@
+{% extends  "base.htm" %}
+
+{% block body %}
+    <div class="headerBackground">
+        <header class="header container">
+            <form class="form" method="get" action="/">
+
+                <div class="inputWrapper">
+                    <label class="label" for="input">
+                        <a class="logo" href="/">
+                            <img src="../static/png/logo_64w.png">
+                        </a>
+                    </label>
+                    <input
+                            class="input"
+                            id="input"
+                            type="text"
+                            name="city"
+                            value=""
+                            placeholder="Enter city..."
+                            oninput=fetchSuggestions()
+                    />
+
+                </div>
+                <button class="submitButton" type="submit">
+                    Search
+                </button>
+            </form>
+            <ul class="suggestions" id="suggestions"></ul>
+        </header>
+    </div>
+    <div class="container suggestionsWrapper">
+    </div>
+    <main class="main container">
+        <div class="datetime">{{ datetime }}</div>
+        <h1 class="city">{{ city }}</h1>
+        {% block content %}{% endblock %}
+    </main>
+{% endblock %}

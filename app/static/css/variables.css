@@ -1,0 +1,12 @@
+:root {
+    --white: #fff;
+    --black: #000;
+    --gray: #b2b2b2;
+    --link: rgba(18, 61, 250, .7);
+    --link-hover: rgba(18, 61, 250, 1);
+    --min-temp: rgb(70 70 70);
+    --border: rgb(255 255 255 / 50%);
+    --submit-button: rgb(23 83 221 / 55%);
+    --submit-button-hover: rgb(23 83 221 / 100%);
+    --row-hover: #5e8ddd24;
+}

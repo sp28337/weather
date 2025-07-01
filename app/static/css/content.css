@@ -1,0 +1,168 @@
+.slider-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 0.4s ease;
+}
+
+.slide {
+    min-width: 100%;
+}
+
+.currentWeatherInfo {
+    height: 310px;
+}
+
+.gif {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 15px;
+}
+
+.currentWeather {
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.currentTemperature {
+    font-size: 100px;
+    font-weight: 200;
+}
+
+.weatherList {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    max-width: 700px;
+    margin: 10px auto;
+}
+
+.li {
+    font-size: clamp(16px, 4vw, 20px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.smallGif {
+    width: 50px;
+}
+
+.lowTemp {
+    color: var(--min-temp);
+}
+
+.currentWeatherInfo.--second {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 15px 0;
+}
+
+.additionalInfo {
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    transition: 0.7s;
+    border-radius: 10px;
+}
+
+.row:hover {
+    background-color: var(--row-hover);
+    transition: 0.5s;
+    border-radius: 10px;
+}
+
+.slider-controls {
+    justify-content: center;
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.first {
+    background-color: var(--gray);
+}
+
+.second {
+    background-color: var(--gray);
+}
+
+.first.active {
+    background-color: var(--white);
+}
+
+.second.active {
+    background-color: var(--white);
+}
+
+@media (max-width: 768px) {
+
+    .smallGif {
+        width: 40px;
+    }
+
+    .li {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 520px) {
+   .row {
+        padding: initial;
+   }
+
+    .gif {
+        margin-bottom: 0;
+    }
+
+    .currentWeatherInfo {
+        height: 260px;
+    }
+
+    .currentTemperature {
+        font-size: 75px;
+    }
+    .additionalInfo {
+        font-size: 18px;
+    }
+
+    .slider-controls {
+        margin: 20px 0 auto 0;
+    }
+
+    .dot {
+        height: 10px;
+        width: 10px;
+    }
+
+    .currentWeather {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 370px) {
+    .smallGif {
+        width: 35px;
+    }
+}

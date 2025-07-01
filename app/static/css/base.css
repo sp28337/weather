@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul, ol {
+    list-style-type: none;
+}
+
+h1 {
+    font-weight: 300;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+input {
+    outline: none;
+    background-color: transparent;
+}
+
+input:focus {
+    outline: none;
+    background-color: transparent;
+}
+
+.raleway {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    color: white;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 150px;
+    max-width: 1440px;
+}
+
+.background {
+    height: 100dvh;
+    background: linear-gradient(180deg, #003252 0%, #00A89D 100%);
+}
+
+@media (max-width: 1248px) {
+    .container {
+        padding: 0 10%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 5%;
+    }
+}
