@@ -1,4 +1,8 @@
+from contextlib import asynccontextmanager
+
 import uvicorn
+
+from models import Base, db_helper
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -6,7 +10,16 @@ from app.service import WeatherService
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from utils.templates import templates
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with db_helper.engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
