@@ -18,7 +18,7 @@ async def http_exception_handler(request, exc):
         context={
             "detail": "Page not found",
             "link_title": "Go to homepage",
-        }
+        },
     )
 
 
