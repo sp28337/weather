@@ -7,7 +7,7 @@
                 <div class="currentWeatherInfo">
                     <img class="gif" src="{{ icon | weather_svg }}">
                     <div class="currentWeather">{{ current_weather }}</div>
-                    <div class="currentTemperature">{{ current_temperature }}°</div>
+                    <div class="currentTemperature">{{ current_temperature | int }}°</div>
                 </div>
                 <ul class="weatherList">
                     {% for day in week_forecast %}
@@ -50,14 +50,12 @@
                     </div>
                 </div>
                 <ul class="weatherList">
-                {% for hour in day_forecast %}
-                    {% if current_time <= hour['time'] | handle_time and hour['time'] | handle_time < finish_time %}
-                        <li class="li">
-                            <img class="smallGif" src="{{ hour['condition']['icon'] }}">
-                            <div>{{ hour['time'] | set_time }}</div>
-                            <div>{{ hour['temp_c'] | int }}°</div>
-                        </li>
-                    {% endif %}
+                {% for hour in day_forecast | get_next_hours %}
+                    <li class="li">
+                        <img class="smallGif" src="{{ hour['condition']['icon'] }}">
+                        <div>{{ hour['time'] | set_time }}</div>
+                        <div>{{ hour['temp_c'] | int }}°</div>
+                    </li>
                 {% endfor %}
                 </ul>
             </div>

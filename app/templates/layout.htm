@@ -32,7 +32,7 @@
     <div class="container suggestionsWrapper">
     </div>
     <main class="main container">
-        <div class="datetime">{{ datetime }}</div>
+        <div class="datetime">{{ localtime | datetime_filter }}</div>
         <h1 class="city">{{ city }}</h1>
         {% block content %}{% endblock %}
     </main>

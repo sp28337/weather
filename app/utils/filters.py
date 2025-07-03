@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def weekday_short(date: str) -> str:
@@ -8,7 +8,7 @@ def weekday_short(date: str) -> str:
     return date_obj.strftime("%a")
 
 
-def weather_svg(code):
+def weather_svg(code: int) -> str:
     svg = {
         1000: "../static/svg/sunny.svg",
         1003: "../static/svg/partly-cloudy.svg",
@@ -62,14 +62,14 @@ def weather_svg(code):
     return svg.get(code, "../static/svg/partly-cloudy.svg")
 
 
-def time_converter(time):
+def time_converter(time: str) -> str:
     if time == "No moonset":
         return time
     time_obj = datetime.strptime(time, "%I:%M %p")
     return time_obj.strftime("%H:%M")
 
 
-def set_time(time):
+def set_time(time: str) -> str:
     scheduled_time = datetime.strptime(time, "%Y-%m-%d %H:%M")
     current_time = datetime.now()
     if current_time.hour == scheduled_time.hour:
@@ -78,6 +78,17 @@ def set_time(time):
         return scheduled_time.strftime("%H:%M")
 
 
-def handle_time(time):
-    scheduled_time = datetime.strptime(time, "%Y-%m-%d %H:%M")
-    return scheduled_time.hour
+def datetime_filter(time: str) -> str:
+    time_obj = datetime.strptime(time, "%Y-%m-%d %H:%M")
+    return time_obj.strftime("%A, %B %d")
+
+
+def get_next_hours(hourly_weather_list: list) -> list:
+    current_time = datetime.now()
+    result = []
+    for hourly_weather in hourly_weather_list:
+        if len(result) > 5:
+            break
+        elif datetime.strptime(hourly_weather['time'], "%Y-%m-%d %H:%M") >= current_time - timedelta(hours=1):
+            result.append(hourly_weather)
+    return result
