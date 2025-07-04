@@ -4,7 +4,7 @@ from sqlalchemy.orm import (
     mapped_column,
     declared_attr,
 )
-from utils import pluralize
+from app.utils import pluralize
 
 
 class Base(DeclarativeBase):

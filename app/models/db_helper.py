@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import (
     async_scoped_session,
     AsyncSession,
 )
-from settings import Settings
+from app.settings import Settings
 
 
 settings = Settings()
