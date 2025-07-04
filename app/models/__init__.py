@@ -1,9 +1,9 @@
 from .base import Base
-from .top_cities import TopCities
+from .city import City
 from .db_helper import db_helper
 
 __all__ = [
     "Base",
-    "TopCities",
+    "City",
     "db_helper",
 ]
