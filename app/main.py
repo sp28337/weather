@@ -9,6 +9,10 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from app.service import WeatherService
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from utils.templates import templates
+from api_v1 import router as router_v1
+from settings import Settings
+
+settings = Settings()
 
 
 @asynccontextmanager
@@ -21,6 +25,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.include_router(router_v1, prefix=settings.api_v1_prefix)
 
 
 @app.exception_handler(StarletteHTTPException)

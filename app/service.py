@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from fastapi import Request
 from fastapi.responses import HTMLResponse, JSONResponse
 
@@ -27,7 +25,6 @@ class WeatherService:
         hourly_forecast = day_data["forecast"]["forecastday"][0]["hour"] + [
             day_data["forecast"]["forecastday"][1]["hour"][i] for i in range(6)
         ]
-        pprint(hourly_forecast)
 
         return templates.TemplateResponse(
             request=request,
