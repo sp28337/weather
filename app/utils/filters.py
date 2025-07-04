@@ -57,7 +57,7 @@ def weather_svg(code: int) -> str:
         1273: "../static/svg/thunder.svg",
         1276: "../static/svg/thunder.svg",
         1279: "../static/svg/thunder.svg",
-        1282: "../static/svg/thunder.svg"
+        1282: "../static/svg/thunder.svg",
     }
     return svg.get(code, "../static/svg/partly-cloudy.svg")
 
@@ -69,10 +69,10 @@ def time_converter(time: str) -> str:
     return time_obj.strftime("%H:%M")
 
 
-def set_time(time: str) -> str:
+def set_time(time: str, local_time: str) -> str:
+    localtime = datetime.strptime(local_time, "%Y-%m-%d %H:%M")
     scheduled_time = datetime.strptime(time, "%Y-%m-%d %H:%M")
-    current_time = datetime.now()
-    if current_time.hour == scheduled_time.hour:
+    if localtime.hour == scheduled_time.hour:
         return "Now"
     else:
         return scheduled_time.strftime("%H:%M")
@@ -83,12 +83,15 @@ def datetime_filter(time: str) -> str:
     return time_obj.strftime("%A, %B %d")
 
 
-def get_next_hours(hourly_weather_list: list) -> list:
-    current_time = datetime.now()
+def get_next_hours(hourly_weather_list: list, local_time: str) -> list:
+    localtime = datetime.strptime(local_time, "%Y-%m-%d %H:%M")
     result = []
+
     for hourly_weather in hourly_weather_list:
+        time = datetime.strptime(hourly_weather["time"], "%Y-%m-%d %H:%M")
+
         if len(result) > 5:
             break
-        elif datetime.strptime(hourly_weather['time'], "%Y-%m-%d %H:%M") >= current_time - timedelta(hours=1):
+        elif time >= localtime - timedelta(hours=1):
             result.append(hourly_weather)
     return result

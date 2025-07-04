@@ -33,7 +33,7 @@
                             <span>Atm pressure</span><span>{{ pressure | int }} mmHg</span>
                         </div>
                         <div class="row">
-                            <span>Feels like</span><span>{{ feels_like | int}}°</span>
+                            <span>Feels like</span><span>{{ feels_like | int }}°</span>
                         </div>
                         <div class="row">
                             <span>Moonrise</span>
@@ -50,10 +50,10 @@
                     </div>
                 </div>
                 <ul class="weatherList">
-                {% for hour in day_forecast | get_next_hours %}
+                {% for hour in day_forecast | get_next_hours(localtime) %}
                     <li class="li">
                         <img class="smallGif" src="{{ hour['condition']['icon'] }}">
-                        <div>{{ hour['time'] | set_time }}</div>
+                        <div>{{ hour['time'] | set_time(localtime) }}</div>
                         <div>{{ hour['temp_c'] | int }}°</div>
                     </li>
                 {% endfor %}
