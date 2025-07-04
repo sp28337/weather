@@ -1,3 +1,5 @@
+import pprint
+
 from fastapi import Request
 from fastapi.responses import HTMLResponse, JSONResponse
 
@@ -11,6 +13,8 @@ class WeatherService:
 
         day_data = await get_weather(city=city, days=2, tp=1)
         weather_data = await get_weather(city=city, days=7, tp=24)
+
+        pprint.pprint(day_data)
 
         if day_data.get("error") or weather_data.get("error"):
             return templates.TemplateResponse(
@@ -31,6 +35,7 @@ class WeatherService:
             name="content.htm",
             context={
                 "city": city,
+                "code": weather_data["current"]["condition"]["code"],
                 "localtime": weather_data["location"]["localtime"],
                 "wind": weather_data["current"]["wind_kph"],
                 "humidity": weather_data["current"]["humidity"],

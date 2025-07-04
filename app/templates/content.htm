@@ -5,7 +5,7 @@
         <div class="slider-track">
             <div class="slide">
                 <div class="currentWeatherInfo">
-                    <img class="gif" src="{{ icon | weather_svg }}">
+                    <img class="gif" src="{{ code | weather_svg }}">
                     <div class="currentWeather">{{ current_weather }}</div>
                     <div class="currentTemperature">{{ current_temperature | int }}°</div>
                 </div>
