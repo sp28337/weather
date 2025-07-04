@@ -2,7 +2,6 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 
-from models import Base, db_helper
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -17,9 +16,6 @@ settings = Settings()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    async with db_helper.engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
     yield
 
 
