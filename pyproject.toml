@@ -17,6 +17,7 @@ dependencies = [
     "sqlalchemy[asyncio] (>=2.0.41,<3.0.0)",
     "aiosqlite (>=0.21.0,<0.22.0)",
     "pydantic (>=2.11.7,<3.0.0)",
+    "alembic (>=1.16.2,<2.0.0)",
 ]
 
 
