@@ -9,9 +9,7 @@ from app.service import WeatherService
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from utils.templates import templates
 from api_v1 import router as router_v1
-from settings import Settings
-
-settings = Settings()
+from settings import settings
 
 
 @asynccontextmanager
