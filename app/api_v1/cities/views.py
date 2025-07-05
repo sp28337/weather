@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, status, Depends
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from models import db_helper
@@ -9,7 +9,7 @@ from .schemas import (
     CityUpdatePartialSchema,
     CityUpdateSchema,
 )
-from .dependencies import get_city_by_id
+from .dependencies import get_city_by_id, get_city_by_name
 
 
 router = APIRouter(tags=["Cities"])
@@ -32,6 +32,13 @@ async def create_city(
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
 ):
     return await crud.create_city(session=session, new_city=new_city)
+
+
+@router.get("/{city_name}/", response_model=CitySchema)
+async def get_city_by_name(
+    city: CitySchema = Depends(get_city_by_name),
+):
+    return city
 
 
 @router.get("/{city_id}/", response_model=CitySchema)

@@ -20,6 +20,13 @@ async def get_city(session: AsyncSession, city_id: int) -> City | None:
     return await session.get(City, city_id)
 
 
+async def get_city_by_name(session: AsyncSession, city_name: str) -> City | None:
+    stmt = select(City).where(City.name == city_name)
+    city: City | None = await session.scalar(stmt)
+    print("found city", city_name, city)
+    return city
+
+
 async def create_city(
     session: AsyncSession,
     new_city: CityCreateSchema,
