@@ -34,7 +34,7 @@ async def create_city(
     city = City(**new_city.model_dump())
     session.add(city)
     await session.commit()
-    # await session.refresh(city)
+    await session.refresh(city)
     return city
 
 

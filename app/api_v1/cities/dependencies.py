@@ -28,8 +28,12 @@ async def get_city_by_name(
     city = await crud.get_city_by_name(session=session, city_name=city_name)
     if city is not None:
         return city
-
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"City {city_name} not found!",
-    )
+    return {
+        "id": -1,
+        "name": "",
+        "requested": 0,
+    }
+    # raise HTTPException(
+    #     status_code=status.HTTP_404_NOT_FOUND,
+    #     detail=f"City {city_name} not found!",
+    # )

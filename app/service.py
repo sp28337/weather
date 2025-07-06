@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 
 from utils.templates import templates
 from lib.data import get_autocomplete, get_weather
+from utils import increase_requested
 
 
 class WeatherService:
@@ -16,6 +17,7 @@ class WeatherService:
 
         day_data = await get_weather(city=city, days=2, tp=1)
         weather_data = await get_weather(city=city, days=7, tp=24)
+        await increase_requested(city=city)
 
         if day_data.get("error") or weather_data.get("error"):
             return templates.TemplateResponse(
