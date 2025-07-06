@@ -61,10 +61,32 @@
                 {% endfor %}
                 </ul>
             </div>
+            <div class="slide">
+                <div class="currentWeatherInfo">
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>city</th>
+                                <th>requested times</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for city in cities_list %}
+                                <tr>
+                                    {% for value in city.values() %}
+                                        <td>{{ value }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <div class="slider-controls">
         <button class="dot first active"></button>
         <button class="dot second"></button>
+        <button class="dot third"></button>
     </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-from app.utils.utils import pluralize, increase_requested
+from .utils import pluralize, increase_requested
 
 __all__ = [
     "pluralize",

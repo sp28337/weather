@@ -120,11 +120,19 @@
     background-color: var(--gray);
 }
 
+.third {
+    background-color: var(--gray);
+}
+
 .first.active {
     background-color: var(--white);
 }
 
 .second.active {
+    background-color: var(--white);
+}
+
+.third.active {
     background-color: var(--white);
 }
 

@@ -3,6 +3,19 @@ import httpx
 from app.api_v1.cities.schemas import CitySchema
 
 
+async def get_cities():
+    async with httpx.AsyncClient() as client:
+        url = "http://localhost:8000/api/v1/cities/"
+        cities = await client.get(
+            url,
+            headers={
+                "accept": "application/json",
+            },
+        )
+        print("cities:", cities.json())
+        return cities.json()
+
+
 async def create_city(city: str, requested: int):
     async with httpx.AsyncClient() as client:
         url = "http://localhost:8000/api/v1/cities/"

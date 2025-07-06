@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, desc
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
 from models.city import City
@@ -10,7 +10,7 @@ from api_v1.cities import (
 
 
 async def get_cities(session: AsyncSession) -> list[City]:
-    stmt = select(City).order_by(City.id)
+    stmt = select(City).order_by(desc(City.requested))
     result: Result = await session.execute(stmt)
     cities = result.scalars().all()
     return cities

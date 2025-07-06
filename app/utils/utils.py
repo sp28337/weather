@@ -1,11 +1,5 @@
 import re
 
-from app.clients import (
-    get_city_by_name,
-    create_city,
-    update_city_partial,
-)
-
 
 def pluralize(word: str) -> str:
     if re.search(r"[^aeiou]y$", word):
@@ -14,6 +8,12 @@ def pluralize(word: str) -> str:
 
 
 async def increase_requested(city: str) -> None:
+    from clients.city import (
+        get_city_by_name,
+        create_city,
+        update_city_partial,
+    )
+
     city_from_db = await get_city_by_name(city=city)
     if city_from_db:
         await update_city_partial(city=city_from_db)

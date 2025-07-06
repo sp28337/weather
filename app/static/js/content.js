@@ -2,20 +2,28 @@ const track = document.querySelector('.slider-track');
 const slides = document.querySelectorAll('.slide');
 const first = document.querySelector('.first');
 const second = document.querySelector('.second');
+const third = document.querySelector('.third');
 let current = 0;
 
 // Кнопки
 first.onclick = () => goToSlide(0);
 second.onclick = () => goToSlide(1);
+third.onclick = () => goToSlide(2);
 
 function goToSlide(idx) {
     // Обновляем классы активных кнопок
     if (idx === 0) {
         first.classList.add('active');
         second.classList.remove('active');
-    } else {
+        third.classList.remove('active');
+    } else if (idx === 1) {
         first.classList.remove('active');
         second.classList.add('active');
+        third.classList.remove('active');
+    } else {
+        first.classList.remove('active');
+        second.classList.remove('active');
+        third.classList.add('active');
     }
 
     // Ограничиваем индекс, чтобы не было зацикливания
@@ -41,15 +49,21 @@ track.addEventListener('touchstart', (e) => {
 
 track.addEventListener('touchmove', (e) => {
     if (!isDragging) return;
+
     const touchX = e.touches[0].clientX;
     let diff = touchX - startX;
 
     // Логика ограничения оттягивания:
-    // Если первый слайд и свайп вправо (diff > 0), ограничиваем оттягивание (например, максимум 50px)
+    // Ограничение для первого слайда
     if (current === 0 && diff > 0) {
         diff = Math.min(diff, 50);
     }
-    // Если последний слайд и свайп влево (diff < 0), ограничиваем оттягивание
+    // Ограничение для центрального слайда (например, если current === centralIndex)
+    const centralIndex = Math.floor(slides.length / 2);
+    if (current === centralIndex && (diff > 0 || diff < 0)) {
+        diff = Math.min(Math.max(diff, -50), 50);
+    }
+    // Ограничение для последнего слайда
     if (current === slides.length - 1 && diff < 0) {
         diff = Math.max(diff, -50);
     }

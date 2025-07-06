@@ -8,6 +8,7 @@ from .schemas import (
     CityCreateSchema,
     CityUpdatePartialSchema,
     CityUpdateSchema,
+    CitySchemaBase,
 )
 from .dependencies import get_city_by_id, get_city_by_name
 
@@ -15,7 +16,7 @@ from .dependencies import get_city_by_id, get_city_by_name
 router = APIRouter(tags=["Cities"])
 
 
-@router.get("/", response_model=list[CitySchema])
+@router.get("/", response_model=list[CitySchemaBase])
 async def get_cities(
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
 ):
