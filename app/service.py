@@ -8,6 +8,11 @@ from lib.data import get_autocomplete, get_weather
 class WeatherService:
     @staticmethod
     async def get_layout(request: Request, city: str | None) -> HTMLResponse:
+        if not city:
+            return templates.TemplateResponse(
+                request=request,
+                name="welcome.htm",
+            )
 
         day_data = await get_weather(city=city, days=2, tp=1)
         weather_data = await get_weather(city=city, days=7, tp=24)

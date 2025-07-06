@@ -12,7 +12,7 @@
 }
 
 .header {
-    margin: 20px auto;
+    margin: 20px auto !important;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -102,29 +102,8 @@
     height: 100dvh;
 }
 
-.datetime {
-    font-size: 28px;
-    font-weight: 200;
-    margin-top: 20px;
-}
-
-.city {
-    font-size: 38px;
-    font-weight: 500;
-    margin-bottom: 30px;
-}
-
 @media (max-width: 520px) {
     .form {
         gap: 7px;
-    }
-
-    .datetime {
-        font-size: 24px;
-    }
-
-    .city {
-        margin-bottom: 15px;
-        font-size: 34px;
     }
 }

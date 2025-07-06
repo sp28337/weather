@@ -35,7 +35,7 @@ async def http_exception_handler(request, exc):
 
 
 @app.get("/")
-async def root(request: Request, city: str | None = "Pattaya") -> HTMLResponse:
+async def root(request: Request, city: str | None = None) -> HTMLResponse:
     return await WeatherService.get_layout(request=request, city=city)
 
 
