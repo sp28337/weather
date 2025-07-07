@@ -1,0 +1,80 @@
+.arrowWrapper {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    opacity: 0;
+    animation: fadeInArrow 1.2s ease-in-out forwards;
+}
+
+.arrow {
+    width: 150px;
+    height: auto;
+    margin-bottom: 50px;
+    rotate: -90deg;
+    transform: rotate(-90deg);
+    animation: floatArrow 3s ease-in-out infinite alternate;
+}
+
+.welcomeWrapper {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: fadeInWelcome 1.2s ease-out forwards;
+    text-shadow: initial;
+    opacity: 0;
+}
+
+.welcome {
+    white-space: nowrap;
+    font-size: clamp(30px, 4vw, 50px);
+    font-weight: 500;
+}
+
+@keyframes fadeInArrow {
+  to {
+    opacity: 1;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes fadeInWelcome {
+  to {
+    opacity: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes floatArrow {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-40px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 768px) {
+    .arrow {
+        width: 100px;
+    }
+}
+
+@media (max-width: 520px) {
+    .welcome {
+        white-space: initial;
+        min-width: 280px;
+    };
+
+    .arrow {
+        width: 70px;
+    }
+}

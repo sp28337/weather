@@ -12,6 +12,18 @@
     min-width: 100%;
 }
 
+.datetime {
+    font-size: 28px;
+    font-weight: 200;
+    margin-top: 20px;
+}
+
+.city {
+    font-size: 38px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
 .currentWeatherInfo {
     height: 310px;
 }
@@ -108,11 +120,19 @@
     background-color: var(--gray);
 }
 
+.third {
+    background-color: var(--gray);
+}
+
 .first.active {
     background-color: var(--white);
 }
 
 .second.active {
+    background-color: var(--white);
+}
+
+.third.active {
     background-color: var(--white);
 }
 
@@ -128,6 +148,15 @@
 }
 
 @media (max-width: 520px) {
+    .datetime {
+        font-size: 24px;
+    }
+
+    .city {
+        margin-bottom: 15px;
+        font-size: 34px;
+    }
+
    .row {
         padding: initial;
    }

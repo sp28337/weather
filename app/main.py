@@ -9,9 +9,7 @@ from app.service import WeatherService
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from utils.templates import templates
 from api_v1 import router as router_v1
-from settings import Settings
-
-settings = Settings()
+from settings import settings
 
 
 @asynccontextmanager
@@ -37,7 +35,7 @@ async def http_exception_handler(request, exc):
 
 
 @app.get("/")
-async def root(request: Request, city: str | None = "Pattaya") -> HTMLResponse:
+async def root(request: Request, city: str | None = None) -> HTMLResponse:
     return await WeatherService.get_layout(request=request, city=city)
 
 

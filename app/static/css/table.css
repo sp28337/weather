@@ -1,0 +1,28 @@
+.table {
+    width: 100%;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    display: table;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    text-indent: initial;
+    unicode-bidi: isolate;
+    border-spacing: 0;
+    border-color: var(--border);
+}
+
+.thead {
+    font-size: 20px;
+}
+
+.th {
+    padding: 10px;
+    text-transform: capitalize;
+}
+
+.td {
+     padding: 5px;
+}
+

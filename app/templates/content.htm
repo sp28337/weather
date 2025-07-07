@@ -1,6 +1,8 @@
 {% extends "layout.htm" %}
 
 {% block content %}
+    <div class="datetime">{{ localtime | datetime_filter }}</div>
+    <h1 class="city">{{ city }}</h1>
     <div class="slider-container">
         <div class="slider-track">
             <div class="slide">
@@ -59,10 +61,32 @@
                 {% endfor %}
                 </ul>
             </div>
+            <div class="slide">
+                <div class="currentWeatherInfo">
+                    <table class="table" border="1">
+                        <thead>
+                            <tr class="thead">
+                                <th class="th">city</th>
+                                <th class="th">requested times</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for city in cities_list %}
+                                <tr>
+                                    {% for value in city.values() %}
+                                        <td class="td">{{ value }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <div class="slider-controls">
         <button class="dot first active"></button>
         <button class="dot second"></button>
+        <button class="dot third"></button>
     </div>
 {% endblock %}

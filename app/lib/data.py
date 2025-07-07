@@ -1,8 +1,6 @@
 import httpx
 from fastapi.responses import JSONResponse
-from app.settings import Settings
-
-settings = Settings()
+from app.settings import settings
 
 
 async def get_weather(city: str, days: int, tp: int) -> JSONResponse | dict:
@@ -18,7 +16,7 @@ async def get_weather(city: str, days: int, tp: int) -> JSONResponse | dict:
                 "days": days,
                 "tp": tp,
                 "key": settings.WEATHER_API_KEY,
-            }
+            },
         )
         if response.status_code == 200:
             return response.json()
@@ -30,10 +28,9 @@ async def get_weather(city: str, days: int, tp: int) -> JSONResponse | dict:
 async def get_autocomplete(query: str) -> JSONResponse | dict:
     async with httpx.AsyncClient() as client:
         url = "https://api.weatherapi.com/v1/search.json"
-        response = await client.get(url, params={
-            "key": settings.WEATHER_API_KEY,
-            "q": query
-        })
+        response = await client.get(
+            url, params={"key": settings.WEATHER_API_KEY, "q": query}
+        )
 
         if response.status_code == 200:
             return response.json()

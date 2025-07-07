@@ -1,0 +1,19 @@
+{% extends "layout.htm" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/variables.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/welcome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/base.css') }}">
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+
+    <div class="arrowWrapper">
+        <img class="arrow" src="../static/svg/arrow.svg">
+    </div>
+    <div class="welcomeWrapper ">
+        <h1 class="welcome ">Enter a city to check the weather...</h1>
+    </div>
+{% endblock %}
