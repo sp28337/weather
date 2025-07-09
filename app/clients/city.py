@@ -12,7 +12,6 @@ async def get_cities():
                 "accept": "application/json",
             },
         )
-        print("cities:", cities.json())
         return cities.json()
 
 
