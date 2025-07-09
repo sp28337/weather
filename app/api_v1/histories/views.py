@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from models import db_helper
 from . import crud
+from .dependencies import get_last_history, get_user_histories
 from .schemas import (
     HistoryCreateSchema,
     HistorySchema,
@@ -10,6 +11,20 @@ from .schemas import (
 
 
 router = APIRouter(tags=["History"])
+
+
+@router.get("/user-histories/{user_id}/", response_model=list[HistorySchema])
+async def get_user_histories(
+    user_histories: list[HistorySchema] = Depends(get_user_histories),
+):
+    return user_histories
+
+
+@router.get("/last-history/{user_id}/", response_model=HistorySchema)
+async def get_last_history(
+    last_hystory: HistorySchema = Depends(get_last_history),
+):
+    return last_hystory
 
 
 @router.post(

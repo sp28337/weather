@@ -1,8 +1,8 @@
 """create history table
 
-Revision ID: 899574578e2a
+Revision ID: 8b6aaeb90583
 Revises: 3d90e3ca13e5
-Create Date: 2025-07-09 16:07:08.410094
+Create Date: 2025-07-09 20:01:22.174543
 
 """
 
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "899574578e2a"
+revision: str = "8b6aaeb90583"
 down_revision: Union[str, Sequence[str], None] = "3d90e3ca13e5"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None

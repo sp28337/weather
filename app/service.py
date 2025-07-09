@@ -71,7 +71,9 @@ class WeatherService:
             await create_history(user_id=user_id, city=city)
         else:
             user_id = str(uuid4())
-            response.set_cookie(key="user_id", value=user_id, httponly=True)
+            response.set_cookie(
+                key="user_id", value=user_id, httponly=True, max_age=604800
+            )
             await create_history(user_id=user_id, city=city)
 
         return response
