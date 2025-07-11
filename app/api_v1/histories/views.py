@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
-from models import db_helper
+from app.infrastructure import get_session
 from . import crud
 from .dependencies import get_last_history, get_user_histories
 from .schemas import (
@@ -34,6 +34,6 @@ async def get_last_history(
 )
 async def create_history(
     new_history: HistoryCreateSchema,
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(get_session),
 ):
     return await crud.create_history(session=session, new_history=new_history)

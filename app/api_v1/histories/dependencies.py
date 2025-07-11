@@ -3,13 +3,14 @@ from typing import Annotated
 from fastapi import Path, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models import db_helper, History
+from app.infrastructure import get_session
+from models import History
 from . import crud
 
 
 async def get_last_history(
     user_id: Annotated[str, Path()],
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(get_session),
 ) -> History:
     history = await crud.get_last_history(session=session, user_id=user_id)
     if history is not None:
@@ -23,7 +24,7 @@ async def get_last_history(
 
 async def get_user_histories(
     user_id: Annotated[str, Path()],
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(get_session),
 ) -> list[History]:
     histories = await crud.get_user_histories(session=session, user_id=user_id)
     if histories is not None:

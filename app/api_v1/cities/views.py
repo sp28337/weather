@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
-from models import db_helper
+from app.infrastructure import get_session
 from . import crud
 from .schemas import (
     CitySchema,
@@ -18,7 +18,7 @@ router = APIRouter(tags=["Cities"])
 
 @router.get("/", response_model=list[CitySchemaBase])
 async def get_cities(
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(get_session),
 ):
     return await crud.get_cities(session=session)
 
@@ -30,7 +30,7 @@ async def get_cities(
 )
 async def create_city(
     new_city: CityCreateSchema,
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(get_session),
 ):
     return await crud.create_city(session=session, new_city=new_city)
 
@@ -53,7 +53,7 @@ async def get_city(
 async def update_city(
     city_update: CityUpdateSchema,
     city: CitySchema = Depends(get_city_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(get_session),
 ):
     return await crud.update_city(
         session=session,
@@ -66,7 +66,7 @@ async def update_city(
 async def update_city_partial(
     city_update: CityUpdatePartialSchema,
     city: CitySchema = Depends(get_city_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(get_session),
 ):
     return await crud.update_city(
         session=session,
@@ -79,6 +79,6 @@ async def update_city_partial(
 @router.delete("/{city_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_city(
     city: CitySchema = Depends(get_city_by_id),
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(get_session),
 ) -> None:
     await crud.delete_city(session=session, city=city)
