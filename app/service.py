@@ -3,10 +3,17 @@ from uuid import uuid4
 from fastapi import Request
 from fastapi.responses import HTMLResponse, JSONResponse
 
-from utils.templates import templates
-from lib.data import get_autocomplete, get_weather
-from utils import increase_requested, create_history
-from clients.city import get_cities
+from jinja.templates import templates
+from actions import (
+    increase_requested_city_counter,
+    make_new_history_for_user,
+)
+from clients import (
+    get_cities_client,
+    get_weather_client,
+    autocomplete_client,
+    get_last_history_client,
+)
 
 
 class WeatherService:
@@ -15,17 +22,22 @@ class WeatherService:
         request: Request,
         city: str | None,
     ) -> HTMLResponse:
-        if not city:
+
+        user_id = request.cookies.get("user_id")
+
+        if not city and not user_id:
             return templates.TemplateResponse(
                 request=request,
                 name="welcome.htm",
             )
+        elif not city and user_id:
+            last_history = await get_last_history_client(user_id=user_id)
+            city = last_history["city"]
 
-        user_id = request.cookies.get("user_id")
-        day_data = await get_weather(city=city, days=2, tp=1)
-        weather_data = await get_weather(city=city, days=7, tp=24)
-        await increase_requested(city=city)
-        cities_list = await get_cities()
+        day_data = await get_weather_client(city=city, days=2, tp=1)
+        weather_data = await get_weather_client(city=city, days=7, tp=24)
+        await increase_requested_city_counter(city=city)
+        cities_list = await get_cities_client()
 
         if day_data.get("error") or weather_data.get("error"):
             return templates.TemplateResponse(
@@ -68,17 +80,17 @@ class WeatherService:
         )
 
         if user_id:
-            await create_history(user_id=user_id, city=city)
+            await make_new_history_for_user(user_id=user_id, city=city)
         else:
             user_id = str(uuid4())
             response.set_cookie(
-                key="user_id", value=user_id, httponly=True, max_age=604800 * 52
+                key="user_id", value=user_id, httponly=True, max_age=604800 * 5200
             )
-            await create_history(user_id=user_id, city=city)
+            await make_new_history_for_user(user_id=user_id, city=city)
 
         return response
 
     @staticmethod
     async def autocomplete(q: str) -> JSONResponse:
-        res = await get_autocomplete(query=q)
+        res = await autocomplete_client(query=q)
         return res

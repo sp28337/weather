@@ -1,7 +1,19 @@
 import httpx
 
 
-async def create_history(city: str, user_id: str):
+async def get_last_history_client(user_id: str):
+    async with httpx.AsyncClient() as client:
+        url = f"http://localhost:8000/api/v1/histories/last-history/{user_id}/"
+        last_history = await client.get(
+            url,
+            headers={
+                "accept": "application/json",
+            },
+        )
+        return last_history.json()
+
+
+async def create_history_client(city: str, user_id: str):
     async with httpx.AsyncClient() as client:
         url = "http://localhost:8000/api/v1/histories/"
         await client.post(

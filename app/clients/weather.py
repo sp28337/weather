@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from app.settings import settings
 
 
-async def get_weather(city: str, days: int, tp: int) -> JSONResponse | dict:
+async def get_weather_client(city: str, days: int, tp: int) -> JSONResponse | dict:
     async with httpx.AsyncClient() as client:
         url = "https://api.weatherapi.com/v1/forecast.json"
         response = await client.get(
@@ -18,22 +18,14 @@ async def get_weather(city: str, days: int, tp: int) -> JSONResponse | dict:
                 "key": settings.WEATHER_API_KEY,
             },
         )
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print(f"error: {response.text}")
-            return {"error": response.text}
+        return response.json()
 
 
-async def get_autocomplete(query: str) -> JSONResponse | dict:
+async def autocomplete_client(query: str) -> JSONResponse | dict:
     async with httpx.AsyncClient() as client:
         url = "https://api.weatherapi.com/v1/search.json"
         response = await client.get(
             url, params={"key": settings.WEATHER_API_KEY, "q": query}
         )
 
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print(f"error: {response.text}")
-            return {"error": response.text}
+        return response.json()

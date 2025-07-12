@@ -1,5 +1,5 @@
 from fastapi.templating import Jinja2Templates
-from app.utils.filters import (
+from .filters import (
     weekday_short,
     weather_svg,
     time_converter,
