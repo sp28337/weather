@@ -19,11 +19,3 @@ async def increase_requested_city_counter(city: str) -> None:
         await update_city_partial_client(city=city_from_db)
     else:
         await create_city_client(city=city, requested=1)
-
-
-async def make_new_history_for_user(user_id: str, city: str):
-    from clients import (
-        create_history_client,
-    )
-
-    await create_history_client(user_id=user_id, city=city)

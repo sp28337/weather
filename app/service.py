@@ -6,13 +6,13 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from jinja.templates import templates
 from actions import (
     increase_requested_city_counter,
-    make_new_history_for_user,
 )
 from clients import (
     get_cities_client,
     get_weather_client,
     autocomplete_client,
     get_last_history_client,
+    get_histories_client,
 )
 
 
@@ -49,6 +49,9 @@ class WeatherService:
                 },
             )
 
+        if not user_id:
+            user_id = str(uuid4())
+
         hourly_forecast = day_data["forecast"]["forecastday"][0]["hour"] + [
             day_data["forecast"]["forecastday"][1]["hour"][i] for i in range(6)
         ]
@@ -57,6 +60,9 @@ class WeatherService:
             request=request,
             name="content.htm",
             context={
+                "histories": (
+                    await get_histories_client(user_id=user_id) if user_id else [""]
+                ),
                 "cities_list": cities_list,
                 "city": city,
                 "code": weather_data["current"]["condition"]["code"],
@@ -79,14 +85,9 @@ class WeatherService:
             },
         )
 
-        if user_id:
-            await make_new_history_for_user(user_id=user_id, city=city)
-        else:
-            user_id = str(uuid4())
-            response.set_cookie(
-                key="user_id", value=user_id, httponly=True, max_age=604800 * 5200
-            )
-            await make_new_history_for_user(user_id=user_id, city=city)
+        response.set_cookie(
+            key="user_id", value=user_id, httponly=False, max_age=604800 * 5200
+        )
 
         return response
 

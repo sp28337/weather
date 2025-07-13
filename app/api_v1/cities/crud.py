@@ -10,7 +10,7 @@ from api_v1.cities import (
 
 
 async def get_cities(session: AsyncSession) -> list[City]:
-    stmt = select(City).order_by(desc(City.requested)).limit(15)
+    stmt = select(City).order_by(desc(City.requested)).limit(10)
     result: Result = await session.execute(stmt)
     cities = result.scalars().all()
     return cities

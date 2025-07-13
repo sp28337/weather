@@ -1,26 +1,36 @@
 const track = document.querySelector('.slider-track');
 const slides = document.querySelectorAll('.slide');
+const zero = document.querySelector('.zero');
 const first = document.querySelector('.first');
 const second = document.querySelector('.second');
 const third = document.querySelector('.third');
-let current = 0;
+let current = 1;
 
 // Кнопки
-first.onclick = () => goToSlide(0);
-second.onclick = () => goToSlide(1);
-third.onclick = () => goToSlide(2);
+zero.onclick = () => goToSlide(0);
+first.onclick = () => goToSlide(1);
+second.onclick = () => goToSlide(2);
+third.onclick = () => goToSlide(3);
 
 function goToSlide(idx) {
     // Обновляем классы активных кнопок
     if (idx === 0) {
-        first.classList.add('active');
+        zero.classList.add('active');
+        first.classList.remove('active');
         second.classList.remove('active');
         third.classList.remove('active');
     } else if (idx === 1) {
+        zero.classList.remove('active');
+        first.classList.add('active');
+        second.classList.remove('active');
+        third.classList.remove('active');
+    } else if (idx === 2) {
+        zero.classList.remove('active');
         first.classList.remove('active');
         second.classList.add('active');
         third.classList.remove('active');
     } else {
+        zero.classList.remove('active');
         first.classList.remove('active');
         second.classList.remove('active');
         third.classList.add('active');
@@ -95,3 +105,5 @@ track.addEventListener('touchend', (e) => {
         track.style.transform = `translateX(-${current * 100}%)`;
     }
 });
+
+goToSlide(1);

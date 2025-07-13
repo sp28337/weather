@@ -10,6 +10,6 @@ class History(Base):
     user_id: Mapped[str] = mapped_column(nullable=False)
     city: Mapped[str] = mapped_column(nullable=False)
     timestamp: Mapped[datetime] = mapped_column(
-        default=datetime.now(UTC),
+        # default=datetime.now(UTC),
         server_default=func.now(),
     )

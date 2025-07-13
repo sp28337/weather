@@ -7,6 +7,7 @@ from .city import (
 from .history import (
     create_history_client,
     get_last_history_client,
+    get_histories_client,
 )
 from .weather import (
     get_weather_client,
@@ -20,6 +21,7 @@ __all__ = [
     "get_city_by_name_client",
     "get_cities_client",
     "create_history_client",
+    "get_histories_client",
     "get_last_history_client",
     "get_weather_client",
     "autocomplete_client",

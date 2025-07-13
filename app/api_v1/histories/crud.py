@@ -7,7 +7,7 @@ from .schemas import (
 )
 
 
-async def get_histories(session: AsyncSession, user_id: str) -> list[History]:
+async def get_histories(session: AsyncSession) -> list[History]:
     stmt = select(History).order_by(History.timestamp).limit(10)
     result: Result = await session.execute(stmt)
     histories = result.scalars().all()
@@ -18,7 +18,7 @@ async def get_user_histories(session: AsyncSession, user_id: str) -> list[Histor
     stmt = (
         select(History)
         .where(History.user_id == user_id)
-        .order_by(History.timestamp)
+        .order_by(desc(History.id))
         .limit(10)
     )
     result: Result = await session.execute(stmt)

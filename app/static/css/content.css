@@ -12,6 +12,17 @@
     min-width: 100%;
 }
 
+.h2 {
+    text-transform: uppercase;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.historyList {
+    margin: 0 auto;
+    width: 80%;
+}
+
 .datetime {
     font-size: 28px;
     font-weight: 200;
@@ -112,6 +123,15 @@
     transition: background-color 0.3s ease;
 }
 
+.zero {
+    opacity: .7;
+    transition: 0.5s;
+}
+
+.history {
+    fill: #fff;
+}
+
 .first {
     background-color: var(--gray);
 }
@@ -122,6 +142,11 @@
 
 .third {
     background-color: var(--gray);
+}
+
+.zero.active {
+    transition: 0.5s;
+    opacity: 1;
 }
 
 .first.active {
@@ -137,6 +162,10 @@
 }
 
 @media (max-width: 768px) {
+
+    .historyList {
+        width: 100%;
+    }
 
     .smallGif {
         width: 40px;
@@ -178,11 +207,6 @@
 
     .slider-controls {
         margin: 20px 0 auto 0;
-    }
-
-    .dot {
-        height: 10px;
-        width: 10px;
     }
 
     .currentWeather {
