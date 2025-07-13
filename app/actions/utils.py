@@ -8,7 +8,7 @@ def pluralize(word: str) -> str:
 
 
 async def increase_requested_city_counter(city: str) -> None:
-    from clients import (
+    from app.clients import (
         get_city_by_name_client,
         create_city_client,
         update_city_partial_client,

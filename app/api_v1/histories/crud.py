@@ -1,7 +1,8 @@
 from sqlalchemy import select, desc
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
-from models.history import History
+
+from app.models import History
 from .schemas import (
     HistoryCreateSchema,
 )

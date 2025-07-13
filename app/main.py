@@ -1,14 +1,15 @@
-from contextlib import asynccontextmanager
-
 import uvicorn
+
+from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
-from app.service import WeatherService
 
-from api_v1 import router as router_v1
-from settings import settings
+from app.service import WeatherService
+from app.api_v1 import router as router_v1
+from app.settings import settings
 
 
 @asynccontextmanager
@@ -16,8 +17,11 @@ async def lifespan(app: FastAPI):
     yield
 
 
+BASE_DIR = Path(__file__).resolve().parent  # папка, где лежит main.py
+STATIC_DIR = BASE_DIR / "static"  # папка static внутри проекта
+
 app = FastAPI(title="Week Weather", lifespan=lifespan)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.include_router(router_v1, prefix=settings.api_v1_prefix)
 
 

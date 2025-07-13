@@ -3,7 +3,7 @@ import httpx
 
 async def get_histories_client(user_id: str):
     async with httpx.AsyncClient() as client:
-        url = f"http://127.0.0.1:8000/api/v1/histories/user-histories/{user_id}/"
+        url = f"http://localhost:8000/api/v1/histories/user-histories/{user_id}/"
         histories = await client.get(
             url,
             headers={

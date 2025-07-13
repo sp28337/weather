@@ -56,17 +56,10 @@ document.getElementById('cityForm').addEventListener('submit', async function(ev
     const cityInput = document.getElementById('input');
     const city = cityInput.value.trim();
 
-    if (!city) {
-        alert('Пожалуйста, введите название города');
-        return;
-    }
-
     const success = await createHistoryClient(city);
 
     if (success) {
         // Отправляем форму традиционно после успешного fetch
         this.submit();
-    } else {
-        alert('Произошла ошибка при сохранении истории. Попробуйте позже.');
-    }
+    };
 });

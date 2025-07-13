@@ -3,11 +3,11 @@ from uuid import uuid4
 from fastapi import Request
 from fastapi.responses import HTMLResponse, JSONResponse
 
-from jinja.templates import templates
-from actions import (
+from .jinja.templates import templates
+from .actions import (
     increase_requested_city_counter,
 )
-from clients import (
+from .clients import (
     get_cities_client,
     get_weather_client,
     autocomplete_client,

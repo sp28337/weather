@@ -1,8 +1,9 @@
 from sqlalchemy import select, desc
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
-from models.city import City
-from api_v1.cities import (
+
+from app.models import City
+from app.api_v1.cities import (
     CityCreateSchema,
     CityUpdateSchema,
     CityUpdatePartialSchema,

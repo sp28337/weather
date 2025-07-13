@@ -4,7 +4,7 @@ from fastapi import Path, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.infrastructure import get_session
-from models import History
+from app.models import History
 from . import crud
 
 
