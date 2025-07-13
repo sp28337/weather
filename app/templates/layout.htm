@@ -3,8 +3,7 @@
 {% block body %}
     <div class="headerBackground">
         <header class="header container">
-            <form class="form" method="get" action="/">
-
+            <form id="cityForm" class="form" method="get" action="/">
                 <div class="inputWrapper">
                     <label class="label" for="input">
                         <a class="logoLink" href="/">
@@ -26,7 +25,11 @@
                             oninput=fetchSuggestions()
                     />
                 </div>
-                <button class="submitButton" type="submit">
+                <button
+                        class="submitButton"
+                        type="submit"
+                        onclick=createHistoryClient()
+                >
                     Search
                 </button>
             </form>

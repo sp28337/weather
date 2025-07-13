@@ -1,6 +1,11 @@
 from datetime import datetime, timedelta
 
 
+def format_datetime(value: str) -> str:
+    dt = datetime.fromisoformat(value)
+    return dt.strftime("%d.%m.%Y")
+
+
 def weekday_short(date: str) -> str:
     if not date:
         return ""

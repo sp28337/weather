@@ -1,11 +1,22 @@
 {% extends "layout.htm" %}
 
 {% block content %}
-    <div class="datetime">{{ localtime | datetime_filter }}</div>
-    <h1 class="city">{{ city }}</h1>
     <div class="slider-container">
         <div class="slider-track">
             <div class="slide">
+                <h2 class="h2">history</h2>
+                    <ul class="historyList">
+                    {% for row in histories %}
+                        <li class="historyRow" data-city="{{ row.city }}">
+                            <span>{{ row.timestamp | format_datetime }}</span>
+                            <span>{{ row.city }}</span>
+                        </li>
+                    {% endfor %}
+                    </ul>
+            </div>
+            <div class="slide">
+                <div class="datetime">{{ localtime | datetime_filter }}</div>
+                <h1 class="city">{{ city }}</h1>
                 <div class="currentWeatherInfo">
                     <img class="gif" src="{{ code | weather_svg }}">
                     <div class="currentWeather">{{ current_weather }}</div>
@@ -23,6 +34,8 @@
                 </ul>
             </div>
             <div class="slide">
+                <div class="datetime">{{ localtime | datetime_filter }}</div>
+                <h1 class="city">{{ city }}</h1>
                 <div class="currentWeatherInfo --second">
                     <div class="additionalInfo">
                         <div class="row">
@@ -62,29 +75,29 @@
                 </ul>
             </div>
             <div class="slide">
-                <div class="currentWeatherInfo">
-                    <table class="table" border="1">
-                        <thead>
-                            <tr class="thead">
-                                <th class="th">city</th>
-                                <th class="th">requested times</th>
+                <h2 class="h2">Top cities</h2>
+                <table class="table" border="1">
+                    <thead>
+                        <tr class="thead">
+                            <th class="th">city</th>
+                            <th class="th">requested times</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for city in cities_list %}
+                            <tr>
+                                {% for value in city.values() %}
+                                    <td class="td">{{ value }}</td>
+                                {% endfor %}
                             </tr>
-                        </thead>
-                        <tbody>
-                            {% for city in cities_list %}
-                                <tr>
-                                    {% for value in city.values() %}
-                                        <td class="td">{{ value }}</td>
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
     <div class="slider-controls">
+        <button class="dot"><img class="zero history" src="../static/svg/history.svg"></button>
         <button class="dot first active"></button>
         <button class="dot second"></button>
         <button class="dot third"></button>

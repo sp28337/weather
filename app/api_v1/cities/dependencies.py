@@ -3,13 +3,14 @@ from typing import Annotated
 from fastapi import Path, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models import db_helper, City
+from models import City
+from app.infrastructure import get_session
 from . import crud
 
 
 async def get_city_by_id(
     city_id: Annotated[int, Path()],
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(get_session),
 ) -> City:
     city = await crud.get_city(session=session, city_id=city_id)
     if city is not None:
@@ -23,7 +24,7 @@ async def get_city_by_id(
 
 async def get_city_by_name(
     city_name: Annotated[str, Path()],
-    session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    session: AsyncSession = Depends(get_session),
 ) -> City:
     city = await crud.get_city_by_name(session=session, city_name=city_name)
     if city is not None:

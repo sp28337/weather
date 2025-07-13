@@ -1,11 +1,12 @@
 from fastapi.templating import Jinja2Templates
-from app.utils.filters import (
+from .filters import (
     weekday_short,
     weather_svg,
     time_converter,
     set_time,
     datetime_filter,
     get_next_hours,
+    format_datetime,
 )
 
 templates = Jinja2Templates(directory="templates")
@@ -15,3 +16,4 @@ templates.env.filters["time_converter"] = time_converter
 templates.env.filters["set_time"] = set_time
 templates.env.filters["datetime_filter"] = datetime_filter
 templates.env.filters["get_next_hours"] = get_next_hours
+templates.env.filters["format_datetime"] = format_datetime

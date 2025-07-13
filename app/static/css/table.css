@@ -17,9 +17,25 @@
     font-size: 20px;
 }
 
+.historyRow {
+    border-radius: 10px;
+    transition: 0.5s;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.historyRow:hover {
+  background-color: var(--row-hover);
+  transition: 0.5s;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .th {
     padding: 10px;
     text-transform: capitalize;
+    width: 50%;
 }
 
 .td {
