@@ -16,6 +16,6 @@ async def increase_requested_city_counter(city: str) -> None:
 
     city_from_db = await get_city_by_name_client(city=city)
     if city_from_db:
-        await update_city_partial_client(city=city_from_db)
+        await update_city_partial_client(city_id=city_from_db["id"])
     else:
         await create_city_client(city=city, requested=1)

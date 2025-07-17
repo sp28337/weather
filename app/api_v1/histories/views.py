@@ -10,7 +10,19 @@ from .schemas import (
 )
 
 
-router = APIRouter(tags=["History"])
+router = APIRouter(prefix="/histories", tags=["History"])
+
+
+@router.post(
+    "/create/",
+    response_model=HistorySchema,
+    status_code=status.HTTP_201_CREATED,
+)
+async def create_history(
+    new_history: HistoryCreateSchema,
+    session: AsyncSession = Depends(get_session),
+):
+    return await crud.create_history(session=session, new_history=new_history)
 
 
 @router.get("/user-histories/{user_id}/", response_model=list[HistorySchema])
@@ -25,15 +37,3 @@ async def get_last_history(
     last_hystory: HistorySchema = Depends(get_last_history),
 ):
     return last_hystory
-
-
-@router.post(
-    "/",
-    response_model=HistorySchema,
-    status_code=status.HTTP_201_CREATED,
-)
-async def create_history(
-    new_history: HistoryCreateSchema,
-    session: AsyncSession = Depends(get_session),
-):
-    return await crud.create_history(session=session, new_history=new_history)

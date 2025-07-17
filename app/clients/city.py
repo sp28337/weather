@@ -1,23 +1,12 @@
 import httpx
 
 from app.api_v1.cities.schemas import CitySchema
-
-
-async def get_cities_client():
-    async with httpx.AsyncClient() as client:
-        url = "http://localhost:8000/api/v1/cities/"
-        cities = await client.get(
-            url,
-            headers={
-                "accept": "application/json",
-            },
-        )
-        return cities.json()
+from app.settings import settings as s
 
 
 async def create_city_client(city: str, requested: int):
     async with httpx.AsyncClient() as client:
-        url = "http://localhost:8000/api/v1/cities/"
+        url = f"{s.url.protocol}://{s.url.host}:{s.url.port}{s.url.api_v1_prefix}/cities/create/"
         await client.post(
             url,
             headers={
@@ -31,32 +20,39 @@ async def create_city_client(city: str, requested: int):
         )
 
 
-async def update_city_partial_client(city: CitySchema):
+async def get_cities_client():
     async with httpx.AsyncClient() as client:
-        url = f"http://localhost:8000/api/v1/cities/{city.id}/"
-        requested = city.requested + 1
-        await client.patch(
+        url = f"{s.url.protocol}://{s.url.host}:{s.url.port}{s.url.api_v1_prefix}/cities/all/"
+        cities = await client.get(
             url,
             headers={
                 "accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            json={
-                "requested": requested,
             },
         )
+        return cities.json()
 
 
-async def get_city_by_name_client(city: str) -> CitySchema | None:
+async def get_city_by_name_client(city: str):
     async with httpx.AsyncClient() as client:
-        url = f"http://localhost:8000/api/v1/cities/{city}/"
+        url = f"{s.url.protocol}://{s.url.host}:{s.url.port}{s.url.api_v1_prefix}/cities/name/{city}/"
         result = await client.get(
             url,
             headers={
                 "accept": "application/json",
             },
         )
-        data = result.json()
-        if data["id"] == -1:
-            return None
-        return CitySchema(**result.json())
+        print(f"result: {result}")
+        print(f"result: {result.json()}")
+        return result.json()
+
+
+async def update_city_partial_client(city_id):
+    async with httpx.AsyncClient() as client:
+        url = f"{s.url.protocol}://{s.url.host}:{s.url.port}{s.url.api_v1_prefix}/cities/update/{city_id}/"
+        await client.patch(
+            url,
+            headers={
+                "accept": "application/json",
+                "Content-Type": "application/json",
+            },
+        )

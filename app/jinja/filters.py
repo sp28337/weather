@@ -67,8 +67,8 @@ def weather_svg(code: int) -> str:
     return svg.get(code, "../static/svg/partly-cloudy.svg")
 
 
-def time_converter(time: str) -> str:
-    if time == "No moonset":
+def moonset_filter(time: str) -> str:
+    if time in ["No moonset", "No moonrise"]:
         return time
     time_obj = datetime.strptime(time, "%I:%M %p")
     return time_obj.strftime("%H:%M")

@@ -8,8 +8,15 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from app.service import WeatherService
-from app.api_v1 import router as router_v1
-from app.settings import settings
+from app.api_v1.cities.handlers import router as city_router
+from app.api_v1.histories.views import router as history_router
+from app.settings import settings as s
+
+
+routers_v1 = [
+    city_router,
+    history_router,
+]
 
 
 @asynccontextmanager
@@ -22,7 +29,9 @@ STATIC_DIR = BASE_DIR / "static"  # папка static внутри проект�
 
 app = FastAPI(title="Week Weather", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-app.include_router(router_v1, prefix=settings.api_v1_prefix)
+
+for router in routers_v1:
+    app.include_router(router, prefix=s.url.api_v1_prefix)
 
 
 @app.get("/")
@@ -33,6 +42,11 @@ async def root(request: Request, city: str | None = None) -> HTMLResponse:
 @app.get("/autocomplete")
 async def autocomplete(query: str) -> JSONResponse:
     return await WeatherService.autocomplete(q=query)
+
+
+@app.get("/not-found")
+async def not_found(request: Request) -> HTMLResponse:
+    return await WeatherService.not_found(request=request)
 
 
 if __name__ == "__main__":

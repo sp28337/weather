@@ -1,8 +1,8 @@
 from uuid import uuid4
-
 from fastapi import Request
 from fastapi.responses import HTMLResponse, JSONResponse
 
+from exceptions import WeatherNotFoundException
 from .jinja.templates import templates
 from .actions import (
     increase_requested_city_counter,
@@ -13,6 +13,7 @@ from .clients import (
     autocomplete_client,
     get_last_history_client,
     get_histories_client,
+    create_history_client,
 )
 
 
@@ -34,12 +35,10 @@ class WeatherService:
             last_history = await get_last_history_client(user_id=user_id)
             city = last_history["city"]
 
-        day_data = await get_weather_client(city=city, days=2, tp=1)
-        weather_data = await get_weather_client(city=city, days=7, tp=24)
-        await increase_requested_city_counter(city=city)
-        cities_list = await get_cities_client()
-
-        if day_data.get("error") or weather_data.get("error"):
+        try:
+            day_data = await get_weather_client(city=city, days=2, tp=1)
+            weather_data = await get_weather_client(city=city, days=7, tp=24)
+        except WeatherNotFoundException:
             return templates.TemplateResponse(
                 request=request,
                 name="not_found.htm",
@@ -49,8 +48,15 @@ class WeatherService:
                 },
             )
 
+        await increase_requested_city_counter(city=city)
+        cities_list = await get_cities_client()
+
+        histories = await get_histories_client(user_id=user_id) if user_id else None
+
         if not user_id:
             user_id = str(uuid4())
+
+        await create_history_client(city=city, user_id=user_id)
 
         hourly_forecast = day_data["forecast"]["forecastday"][0]["hour"] + [
             day_data["forecast"]["forecastday"][1]["hour"][i] for i in range(6)
@@ -60,9 +66,7 @@ class WeatherService:
             request=request,
             name="content.htm",
             context={
-                "histories": (
-                    await get_histories_client(user_id=user_id) if user_id else [""]
-                ),
+                "histories": histories,
                 "cities_list": cities_list,
                 "city": city,
                 "code": weather_data["current"]["condition"]["code"],
@@ -95,3 +99,17 @@ class WeatherService:
     async def autocomplete(q: str) -> JSONResponse:
         res = await autocomplete_client(query=q)
         return res
+
+    @staticmethod
+    async def not_found(
+        request: Request,
+    ) -> HTMLResponse:
+        response = templates.TemplateResponse(
+            request=request,
+            name="not_found.htm",
+            context={
+                "detail": "Please, enter correct city",
+                "link_title": "Try again",
+            },
+        )
+        return response

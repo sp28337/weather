@@ -6,12 +6,14 @@
             <div class="slide">
                 <h2 class="h2">history</h2>
                     <ul class="historyList">
-                    {% for row in histories %}
-                        <li class="historyRow" data-city="{{ row.city }}">
-                            <span>{{ row.timestamp | format_datetime }}</span>
-                            <span>{{ row.city }}</span>
-                        </li>
-                    {% endfor %}
+                    {% if histories %}
+                        {% for row in histories %}
+                            <li class="historyRow" data-city="{{ row.city }}">
+                                <span>{{ row.timestamp | format_datetime }}</span>
+                                <span>{{ row.city }}</span>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
                     </ul>
             </div>
             <div class="slide">
@@ -84,9 +86,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for city in cities_list %}
+                        {% for item in cities_list %}
                             <tr>
-                                {% for value in city.values() %}
+                                {% for value in item.values() %}
                                     <td class="td">{{ value }}</td>
                                 {% endfor %}
                             </tr>
@@ -97,7 +99,9 @@
         </div>
     </div>
     <div class="slider-controls">
-        <button class="dot"><img class="zero history" src="../static/svg/history.svg"></button>
+        <button class="dot zero">
+            <img class="history" src="../static/svg/history.svg">
+        </button>
         <button class="dot first active"></button>
         <button class="dot second"></button>
         <button class="dot third"></button>

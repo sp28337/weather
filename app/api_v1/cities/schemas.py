@@ -12,13 +12,8 @@ class CityCreateSchema(CitySchemaBase):
     pass
 
 
-class CityUpdateSchema(CityCreateSchema):
+class CityUpdateSchema(CitySchemaBase):
     pass
-
-
-class CityUpdatePartialSchema(CityCreateSchema):
-    name: str | None = None
-    requested: int | None = None
 
 
 class CitySchema(CitySchemaBase):
