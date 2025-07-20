@@ -5,8 +5,8 @@ run: ## Run the application
 docker: ## Run docker
 	docker run -d -p 8000:8000 --name weather_container weather
 
-image: ## Create image. EXAMPLE: make image NAME=weather
-	docker build -t $(NAME) .
+image: ## Create image
+	docker build -t weather .
 
 migrate-create: ## Create migration
 	alembic revision --autogenerate -m $(NAME)
