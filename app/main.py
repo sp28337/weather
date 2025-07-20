@@ -1,4 +1,5 @@
-import uvicorn
+# import uvicorn
+
 from typing import Annotated
 
 from contextlib import asynccontextmanager
@@ -46,5 +47,5 @@ async def not_found(
     return await weather_service.not_found(request=request)
 
 
-if __name__ == "__main__":
-    uvicorn.run("app.main:app", reload=True)
+# if __name__ == "__main__":
+#     uvicorn.run("app.main:app", reload=True)

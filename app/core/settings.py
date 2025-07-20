@@ -16,7 +16,7 @@ class DbSettings(BaseModel):
 
 class UrlSettings(BaseModel):
     protocol: str = "http"
-    host: str = "localhost"
+    host: str = "host.docker.internal"
     port: str = "8000"
     api_v1_prefix: str = "/api/v1"
 
