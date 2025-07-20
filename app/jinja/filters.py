@@ -2,7 +2,14 @@ from datetime import datetime, timedelta
 
 
 def format_datetime(value: str) -> str:
-    dt = datetime.fromisoformat(value)
+    # dt = datetime.fromisoformat(value)
+    # return dt.strftime("%d.%m.%Y")
+    if isinstance(value, datetime):
+        dt = value
+    elif isinstance(value, str):
+        dt = datetime.fromisoformat(value)
+    else:
+        return value
     return dt.strftime("%d.%m.%Y")
 
 
@@ -67,8 +74,8 @@ def weather_svg(code: int) -> str:
     return svg.get(code, "../static/svg/partly-cloudy.svg")
 
 
-def time_converter(time: str) -> str:
-    if time == "No moonset":
+def moonset_filter(time: str) -> str:
+    if time in ["No moonset", "No moonrise"]:
         return time
     time_obj = datetime.strptime(time, "%I:%M %p")
     return time_obj.strftime("%H:%M")

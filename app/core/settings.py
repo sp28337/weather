@@ -14,13 +14,25 @@ class DbSettings(BaseModel):
     # echo: bool = True
 
 
-class Settings(BaseSettings):
-    WEATHER_API_KEY: str = ""
+class UrlSettings(BaseModel):
+    protocol: str = "http"
+    host: str = "host.docker.internal"
+    port: str = "8000"
     api_v1_prefix: str = "/api/v1"
 
-    db: DbSettings = DbSettings()
+
+class WaetherApiSettings(BaseSettings):
+    url: str = "https://api.weatherapi.com/v1"
+    WEATHER_API_KEY: str = ""
 
     model_config = SettingsConfigDict(env_file=f"../.env", env_file_encoding="utf-8")
+
+
+class Settings(BaseSettings):
+
+    db: DbSettings = DbSettings()
+    url: UrlSettings = UrlSettings()
+    weather: WaetherApiSettings = WaetherApiSettings()
 
 
 settings = Settings()
