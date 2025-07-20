@@ -7,7 +7,7 @@ from app.api_v1.cities.schemas import (
     CitySchemaBase,
     CityUpdateSchema,
 )
-from .repository import CityRepository
+from app.api_v1.cities.repository import CityRepository
 
 
 @dataclass

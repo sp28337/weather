@@ -5,7 +5,7 @@ from app.api_v1.histories.schemas import (
     HistorySchemaBase,
     HistoryCreateSchema,
 )
-from api_v1.histories.repository import HistoryRepository
+from app.api_v1.histories.repository import HistoryRepository
 
 
 @dataclass

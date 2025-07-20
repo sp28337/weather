@@ -4,7 +4,7 @@ from uuid import uuid4
 from fastapi import Request
 from fastapi.responses import HTMLResponse, JSONResponse
 
-from api_v1.histories.schemas import HistoryCreateSchema
+from app.api_v1.histories.schemas import HistoryCreateSchema
 from app.api_v1.histories.service import HistoryService
 from app.api_v1.cities.service import CityService
 from app.clients import get_weather_client, autocomplete_client
