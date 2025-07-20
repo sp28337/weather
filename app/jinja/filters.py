@@ -2,7 +2,14 @@ from datetime import datetime, timedelta
 
 
 def format_datetime(value: str) -> str:
-    dt = datetime.fromisoformat(value)
+    # dt = datetime.fromisoformat(value)
+    # return dt.strftime("%d.%m.%Y")
+    if isinstance(value, datetime):
+        dt = value
+    elif isinstance(value, str):
+        dt = datetime.fromisoformat(value)
+    else:
+        return value
     return dt.strftime("%d.%m.%Y")
 
 

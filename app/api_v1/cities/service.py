@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from app.exceptions import CityNotFoundException
-from .schemas import (
+from app.core.exceptions import CityNotFoundException
+from app.api_v1.cities.schemas import (
     CitySchema,
     CityCreateSchema,
     CitySchemaBase,
@@ -21,7 +21,7 @@ class CityService:
 
     async def read_cities(self) -> list[CitySchemaBase]:
         cities = await self.city_repo.read_cities()
-        cities_schema = [CitySchema.model_validate(city) for city in cities]
+        cities_schema = [dict(CitySchemaBase.model_validate(city)) for city in cities]
         return cities_schema
 
     async def read_city(self, city_id: int) -> CitySchema:
@@ -41,19 +41,13 @@ class CityService:
         response = CitySchema.model_validate(city)
         return response
 
-        # if city is not None:
-        #     return city
-        # return {
-        #     "id": -1,
-        #     "name": "",
-        #     "requested": 0,
-        # }
-
-        # raise HTTPException(
-        #     status_code=status.HTTP_404_NOT_FOUND,
-        #     detail=f"City {city_name} not found!",
-        # )
-
     async def update_city_requests(self, city_id: int) -> CitySchema:
         updated_city = await self.city_repo.update_city_requests(city_id=city_id)
         return CityUpdateSchema.model_validate(updated_city)
+
+    async def increase_requested_field(self, city: str) -> None:
+        city = await self.read_city_by_name(name=city)
+        if city:
+            await self.update_city_requests(city_id=city.id)
+        else:
+            await self.create_city(CityCreateSchema(name=city, requested=1))

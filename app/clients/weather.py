@@ -1,8 +1,8 @@
 import httpx
 
 from fastapi.responses import JSONResponse
-from app.settings import settings as s
-from exceptions import WeatherNotFoundException
+from app.core.settings import settings as s
+from app.core.exceptions import WeatherNotFoundException
 
 
 async def get_weather_client(city: str, days: int, tp: int) -> JSONResponse:

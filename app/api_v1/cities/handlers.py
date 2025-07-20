@@ -2,8 +2,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, status, Depends, HTTPException
 
-from app.exceptions import CityNotFoundException
-from app.api_v1.cities.dependencies import get_city_service
+from app.core.exceptions import CityNotFoundException
+from app.core.dependencies import get_city_service
 from app.api_v1.cities.service import CityService
 from app.api_v1.cities.schemas import (
     CitySchema,

@@ -1,14 +1,15 @@
+from dataclasses import dataclass
+
 from sqlalchemy import select, desc, update
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api_v1.cities.schemas import CityUpdateSchema
 from app.models import City
 
 
+@dataclass
 class CityRepository:
-    def __init__(self, session: AsyncSession):
-        self.session = session
+    session: AsyncSession
 
     async def create_city(
         self,
@@ -22,7 +23,6 @@ class CityRepository:
         await self.session.flush()
         city_id = city.id
         await self.session.commit()
-        # await self.session.refresh(city)
         return city_id
 
     async def read_cities(self) -> list[City]:
@@ -32,7 +32,6 @@ class CityRepository:
         return cities
 
     async def read_city(self, city_id: int) -> City | None:
-        # return await session.get(City, city_id)
         stmt = select(City).where(City.id == city_id)
         city: City | None = await self.session.scalar(stmt)
         return city
@@ -41,17 +40,6 @@ class CityRepository:
         stmt = select(City).where(City.name == name)
         city: City | None = await self.session.scalar(stmt)
         return city
-
-    # async def update_city(
-    #     self,
-    #     city: City,
-    #     city_update: CityUpdateSchema | CityUpdatePartialSchema,
-    #     partial: bool = False,
-    # ) -> City:
-    #     for name, value in city_update.model_dump(exclude_unset=partial).items():
-    #         setattr(city, name, value)
-    #     await self.session.commit()
-    #     return city
 
     async def update_city_requests(self, city_id: int) -> City:
         stmt = (
@@ -66,3 +54,16 @@ class CityRepository:
         await self.session.commit()
         await self.session.flush()
         return await self.read_city(city_id)
+
+    # Пример Сурена
+    #
+    # async def update_city(
+    #     self,
+    #     city: City,
+    #     city_update: CityUpdateSchema | CityUpdatePartialSchema,
+    #     partial: bool = False,
+    # ) -> City:
+    #     for name, value in city_update.model_dump(exclude_unset=partial).items():
+    #         setattr(city, name, value)
+    #     await self.session.commit()
+    #     return city

@@ -11,7 +11,7 @@ from .filters import (
     format_datetime,
 )
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 TEMPLATES_DIR = BASE_DIR / "templates"
 
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
