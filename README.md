@@ -23,7 +23,7 @@ This solution follows industry best practices.
 
 ---
 
-## Реализовано
+## Released
 - [X] User-friendly and readable forecast format
 - [X] Search history for each user (tracked via cookie)
 - [X] On repeat visits — displays the forecast for the previously searched city
@@ -31,3 +31,13 @@ This solution follows industry best practices.
 - [X] Autocomplete for city input
 - [X] Docker container support
 - [ ] Tests (not yet implemented)
+
+
+## Screenshots
+
+![Welcome page](app/static/screenshots/welcome.png)
+![Week forecast](app/static/screenshots/week-forecast.png)
+![Day forecast](app/static/screenshots/day-forecast.png)
+![Statistics](app/static/screenshots/statistics.png)
+![History](app/static/screenshots/history.png)
+![Autocomplete](app/static/screenshots/autocomplete.png)
