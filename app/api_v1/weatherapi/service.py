@@ -57,12 +57,14 @@ class WeatherService:
                 },
             )
 
-        await self.city_service.increase_requested_field(city=city)
+        await self.city_service.increase_requested_field(city_name=city)
         await self.history_service.create_history(
             HistoryCreateSchema(city=city, user_id=user_id)
         )
 
         cities_list = await self.city_service.read_cities()
+        print("cities_list")
+        print(cities_list)
         histories = await self.history_service.read_user_histories(user_id=user_id)
 
         hourly_forecast = day_data["forecast"]["forecastday"][0]["hour"] + [

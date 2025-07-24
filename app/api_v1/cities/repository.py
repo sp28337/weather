@@ -41,7 +41,7 @@ class CityRepository:
         city: City | None = await self.session.scalar(stmt)
         return city
 
-    async def update_city_requests(self, city_id: int) -> City:
+    async def update_city_requests(self, city_id: int) -> int:
         stmt = (
             update(City)
             .where(City.id == city_id)
@@ -53,7 +53,7 @@ class CityRepository:
 
         await self.session.commit()
         await self.session.flush()
-        return await self.read_city(city_id)
+        return city_id
 
     # Пример Сурена
     #

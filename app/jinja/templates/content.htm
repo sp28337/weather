@@ -88,9 +88,8 @@
                     <tbody>
                         {% for item in cities_list %}
                             <tr>
-                                {% for value in item.values() %}
-                                    <td class="td">{{ value }}</td>
-                                {% endfor %}
+                                <td class="td">{{ item.name }}</td>
+                                <td class="td">{{ item.requested }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
