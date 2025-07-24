@@ -9,7 +9,7 @@ from app.api_v1.cities.schemas import (
     CityCreateSchemaTest,
     CitySchemaBase,
 )
-
+from app.core.exceptions import CityNotFoundException
 
 pytestmark = pytest.mark.asyncio
 
@@ -70,7 +70,7 @@ async def test_read_cities__success(mock_city_service: CityService):
         CityCreateSchemaTest(name="Moscow", requested=1)
     )
     await mock_city_service.create_city(
-        CityCreateSchemaTest(name="Pattaya", requested=1)
+        CityCreateSchemaTest(name="Pattaya", requested=2)
     )
 
     cities = await mock_city_service.read_cities()
@@ -85,7 +85,6 @@ async def test_read_cities__success(mock_city_service: CityService):
         assert isinstance(city.requested, int)
 
 
-@pytest.mark.asyncio
 async def test_read_cities__validation_fail(mock_city_service: CityService):
     invalid_data = [object()]
 
@@ -100,7 +99,6 @@ async def test_read_cities__validation_fail(mock_city_service: CityService):
             await mock_city_service.read_cities()
 
 
-@pytest.mark.asyncio
 async def test_read_cities__repository_throws(mock_city_service: CityService):
     with patch.object(
         mock_city_service.city_repo, "read_cities", new_callable=AsyncMock
@@ -109,3 +107,47 @@ async def test_read_cities__repository_throws(mock_city_service: CityService):
 
         with pytest.raises(RuntimeError):
             await mock_city_service.read_cities()
+
+
+async def test_read_city__success(
+    mock_city_service: CityService,
+):
+    await mock_city_service.create_city(
+        CityCreateSchemaTest(name="Moscow", requested=1)
+    )
+    await mock_city_service.create_city(
+        CityCreateSchemaTest(name="Pattaya", requested=2)
+    )
+
+    moscow = await mock_city_service.read_city(city_id=1)
+    pattaya = await mock_city_service.read_city(city_id=2)
+
+    assert isinstance(moscow, CitySchema)
+    assert isinstance(pattaya, CitySchema)
+    assert moscow.name == "Moscow"
+    assert moscow.requested == 1
+    assert pattaya.name == "Pattaya"
+    assert pattaya.requested == 2
+
+
+@pytest.mark.parametrize(
+    "invalid_city_id",
+    [-1, "10", ["10", 1, 2], 1.1, None, "", "    ", {1: 1}, (1, 2), -0.123],
+)
+async def test_read_city__not_found(
+    invalid_city_id,
+    mock_city_service: CityService,
+):
+    with pytest.raises(CityNotFoundException) as error:
+        await mock_city_service.read_city(city_id=invalid_city_id)
+        assert "City not found" == error.value
+
+
+async def test_read_city__repository_throws(mock_city_service: CityService):
+    with patch.object(
+        mock_city_service.city_repo, "read_city", new_callable=AsyncMock
+    ) as mock_repo:
+        mock_repo.side_effect = RuntimeError("DB connection error")
+
+        with pytest.raises(RuntimeError):
+            await mock_city_service.read_city(city_id=1)
