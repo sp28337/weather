@@ -37,7 +37,11 @@ class CityService:
         return response
 
     async def read_city_by_name(self, name: str) -> CitySchema:
+        if not isinstance(name, str):
+            raise CityNotFoundException
+
         city = await self.city_repo.read_city_by_name(name=name)
+
         if city is None:
             raise CityNotFoundException
 
