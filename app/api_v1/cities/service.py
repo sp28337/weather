@@ -21,8 +21,8 @@ class CityService:
 
     async def read_cities(self) -> list[CitySchemaBase]:
         cities = await self.city_repo.read_cities()
-        cities_schema = [dict(CitySchemaBase.model_validate(city)) for city in cities]
-        return cities_schema
+        cities_list = [CitySchemaBase.model_validate(city) for city in cities]
+        return cities_list
 
     async def read_city(self, city_id: int) -> CitySchema:
         city = await self.city_repo.read_city(city_id=city_id)
