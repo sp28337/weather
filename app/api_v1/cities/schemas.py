@@ -24,6 +24,10 @@ class CityCreateSchema(CitySchemaBase):
     pass
 
 
+class CityCreateSchemaTest(CityCreateSchema):
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+
 class CityUpdateSchema(CitySchemaBase):
     pass
 
