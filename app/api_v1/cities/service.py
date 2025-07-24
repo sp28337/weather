@@ -25,6 +25,9 @@ class CityService:
         return cities_list
 
     async def read_city(self, city_id: int) -> CitySchema:
+        if not isinstance(city_id, int) or city_id <= 0:
+            raise CityNotFoundException
+
         city = await self.city_repo.read_city(city_id=city_id)
 
         if city is None:
