@@ -22,8 +22,8 @@ async def lifespan(app: FastAPI):
     yield
 
 
-BASE_DIR = Path(__file__).resolve().parent  # папка, где лежит main.py
-STATIC_DIR = BASE_DIR / "static"  # папка static внутри проекта
+BASE_DIR = Path(__file__).resolve().parent
+STATIC_DIR = BASE_DIR / "static"
 
 app = FastAPI(title="Week Weather", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")

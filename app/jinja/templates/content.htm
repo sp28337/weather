@@ -69,9 +69,13 @@
                 <ul class="weatherList">
                 {% for hour in day_forecast | get_next_hours(localtime) %}
                     <li class="li">
-                        <img class="smallGif" src="{{ hour['condition']['icon'] }}">
+                        {% if hour.condition is defined %}
+                            <img class="smallGif" src="{{ hour['condition']['icon'] }}">
+                        {% endif %}
                         <div>{{ hour['time'] | set_time(localtime) }}</div>
-                        <div>{{ hour['temp_c'] | int }}°</div>
+                        {% if hour.temp_c is defined %}
+                            <div>{{ hour['temp_c'] | int }}°</div>
+                        {% endif %}
                     </li>
                 {% endfor %}
                 </ul>
@@ -88,9 +92,8 @@
                     <tbody>
                         {% for item in cities_list %}
                             <tr>
-                                {% for value in item.values() %}
-                                    <td class="td">{{ value }}</td>
-                                {% endfor %}
+                                <td class="td">{{ item.name }}</td>
+                                <td class="td">{{ item.requested }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

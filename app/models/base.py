@@ -1,3 +1,4 @@
+from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
@@ -7,7 +8,7 @@ from sqlalchemy.orm import (
 from app.core.actions import pluralize
 
 
-class Base(DeclarativeBase):
+class Base(AsyncAttrs, DeclarativeBase):
     __abstract__ = True
 
     @declared_attr.directive
