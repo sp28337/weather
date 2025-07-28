@@ -36,9 +36,7 @@ class FakeHistoryRepository:
                 key=lambda h: h.timestamp,
                 reverse=True,
             )
-            print(f"histories list: {histories_list}")
             for history in histories_list:
-                print(f"history: {history}")
                 if history.user_id == user_id:
                     return history
         return None

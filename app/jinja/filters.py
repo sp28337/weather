@@ -75,6 +75,8 @@ def weather_svg(code: int) -> str:
 
 
 def moonset_filter(time: str) -> str:
+    if not isinstance(time, str):
+        return str(time)
     if time in ["No moonset", "No moonrise"]:
         return time
     time_obj = datetime.strptime(time, "%I:%M %p")
@@ -82,6 +84,10 @@ def moonset_filter(time: str) -> str:
 
 
 def set_time(time: str, local_time: str) -> str:
+    if not isinstance(time, str):
+        return str(time)
+    if not isinstance(local_time, str):
+        return str(local_time)
     localtime = datetime.strptime(local_time, "%Y-%m-%d %H:%M")
     scheduled_time = datetime.strptime(time, "%Y-%m-%d %H:%M")
     if localtime.hour == scheduled_time.hour:
@@ -91,11 +97,15 @@ def set_time(time: str, local_time: str) -> str:
 
 
 def datetime_filter(time: str) -> str:
+    if not isinstance(time, str):
+        return str(time)
     time_obj = datetime.strptime(time, "%Y-%m-%d %H:%M")
     return time_obj.strftime("%A, %B %d")
 
 
 def get_next_hours(hourly_weather_list: list, local_time: str) -> list:
+    if not isinstance(local_time, str):
+        return str(local_time)
     localtime = datetime.strptime(local_time, "%Y-%m-%d %H:%M")
     result = []
 

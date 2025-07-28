@@ -9,7 +9,6 @@ from app.api_v1.histories.schemas import (
     HistorySchema,
 )
 from app.api_v1.histories.service import HistoryService
-from app.core.exceptions import HistoryNotFoundException
 
 pytestmark = pytest.mark.asyncio
 

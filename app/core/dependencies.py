@@ -9,6 +9,14 @@ from app.api_v1.histories.service import HistoryService
 from app.api_v1.weatherapi.service import WeatherService
 from app.api_v1.cities.repository import CityRepository
 from app.api_v1.cities.service import CityService
+from app.clients import WeatherClient
+from app.core.settings import settings
+
+
+async def get_weather_client() -> WeatherClient:
+    return WeatherClient(
+        s=settings,
+    )
 
 
 async def get_city_repo(
@@ -42,9 +50,11 @@ async def get_history_service(
 async def get_weather_service(
     history_service: Annotated[HistoryService, Depends(get_history_service)],
     city_service: Annotated[CityService, Depends(get_city_service)],
+    weather_client: Annotated[WeatherClient, Depends(get_weather_client)],
 ) -> WeatherService:
 
     return WeatherService(
         history_service=history_service,
         city_service=city_service,
+        weather_client=weather_client,
     )
