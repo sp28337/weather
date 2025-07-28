@@ -179,7 +179,7 @@ async def test_read_city_by_name__success(
     "invalid_city_name",
     [-1, "10", ["10", 1, 2], 1.1, None, "", "   ", {1: 1}, (1, 2), -0.123, "M", 1],
 )
-async def test_read_city__not_found(
+async def test_read_city_by_name__not_found(
     invalid_city_name,
     mock_city_service: CityService,
 ):

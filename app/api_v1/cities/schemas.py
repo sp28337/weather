@@ -34,3 +34,7 @@ class CityUpdateSchema(CitySchemaBase):
 
 class CitySchema(CitySchemaBase):
     id: int
+
+
+class CitySchemaTest(CitySchema, CityCreateSchemaTest):
+    pass

@@ -7,8 +7,11 @@ BASE_DIR = Path(__file__).parent
 
 DB_PATH = BASE_DIR / "db.sqlite3"
 
+TEST_DB_PATH = BASE_DIR / "testdb.sqlite3"
+
 
 class DbSettings(BaseModel):
+    test_url: str = f"sqlite+aiosqlite:///{TEST_DB_PATH}"
     url: str = f"sqlite+aiosqlite:///{DB_PATH}"
     echo: bool = False
     # echo: bool = True
