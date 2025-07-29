@@ -7,6 +7,7 @@ from app.api_v1.histories.schemas import (
     HistorySchemaTest,
     HistorySchemaBase,
     HistorySchema,
+    HistoryCreateSchema,
 )
 from app.api_v1.histories.service import HistoryService
 
@@ -14,47 +15,58 @@ pytestmark = pytest.mark.asyncio
 
 
 @pytest.mark.parametrize(
-    "new_history, last_history, expected_response",
+    "new_history_data, last_history_data, expected_response",
     [
         (
-            HistoryCreateSchemaTest(user_id="a", city="Moscow"),
-            HistoryCreateSchemaTest(user_id="q", city="Moscow"),
+            {"user_id": "a", "city": "Moscow"},
+            {"user_id": "q", "city": "Moscow"},
             None,
         ),
         (
-            HistoryCreateSchemaTest(user_id="a", city="Berlin"),
-            HistoryCreateSchemaTest(user_id="a", city="Berlin"),
+            {"user_id": "a", "city": "Berlin"},
+            {"user_id": "a", "city": "Berlin"},
             None,
         ),
         (
-            HistoryCreateSchemaTest(user_id="a", city="Berlin"),
-            HistoryCreateSchemaTest(user_id="a", city="Moscow"),
-            HistorySchemaTest(user_id="a", city="Berlin", timestamp="1994-10-19"),
+            {"user_id": "a", "city": "Berlin"},
+            {"user_id": "a", "city": "Moscow"},
+            {"user_id": "a", "city": "Berlin", "timestamp": "1994-10-19"},
         ),
         (
-            HistoryCreateSchemaTest(user_id="aaa", city="Moscow"),
+            {"user_id": "aaa", "city": "Moscow"},
             None,
-            HistorySchemaTest(user_id="aaa", city="Moscow", timestamp="1994-10-19"),
+            {"user_id": "aaa", "city": "Moscow", "timestamp": "1994-10-19"},
         ),
         (
-            HistoryCreateSchemaTest(user_id="b", city="Paris"),
-            HistoryCreateSchemaTest(user_id="a", city="Berlin"),
-            HistorySchemaTest(user_id="b", city="Paris", timestamp="1994-10-19"),
+            {"user_id": "b", "city": "Paris"},
+            {"user_id": "a", "city": "Berlin"},
+            {"user_id": "b", "city": "Paris", "timestamp": "1994-10-19"},
         ),
         (
-            HistoryCreateSchemaTest(user_id="a", city="moscow"),
-            HistoryCreateSchemaTest(user_id="a", city="Moscow"),
-            HistorySchemaTest(user_id="a", city="moscow", timestamp="1994-10-19"),
+            {"user_id": "a", "city": "moscow"},
+            {"user_id": "a", "city": "Moscow"},
+            {"user_id": "a", "city": "moscow", "timestamp": "1994-10-19"},
         ),
     ],
 )
 async def test_create_history__success(
-    new_history, last_history, expected_response, mock_history_service: HistoryService
+    new_history_data,
+    last_history_data,
+    expected_response,
+    mock_history_service: HistoryService,
 ):
-    created_history = await mock_history_service.create_history(
-        new_history=new_history, last_history=last_history
+    last_history = None
+    if last_history_data:
+        last_history = HistoryCreateSchema(**last_history_data)
+
+    new_history = await mock_history_service.create_history(
+        new_history=HistoryCreateSchema(**new_history_data),
+        last_history=last_history,
     )
-    assert expected_response == created_history
+    if expected_response:
+        assert HistorySchemaTest(**expected_response) == new_history
+    else:
+        assert expected_response == new_history
 
 
 @pytest.mark.parametrize(
