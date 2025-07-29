@@ -1,20 +1,17 @@
-from unittest.mock import patch, AsyncMock
-
 import pytest
 from pydantic import ValidationError
-from sqlalchemy import select, insert
 
 from app.api_v1.cities.service import CityService
 from app.api_v1.cities.schemas import (
-    CityCreateSchema,
     CityCreateSchemaTest,
     CitySchema,
-    CitySchemaTest,
 )
 from app.core.exceptions import CityNotFoundException
 
 
-@pytest.mark.asyncio(loop_scope="session")
+pytestmark = pytest.mark.asyncio(loop_scope="session")
+
+
 @pytest.mark.parametrize(
     "new_city_data",
     [
@@ -36,7 +33,6 @@ async def test_create_city__success(
     assert city_data.requested == new_city_data["requested"]
 
 
-@pytest.mark.asyncio(loop_scope="session")
 @pytest.mark.parametrize(
     "invalid_city_data",
     [
@@ -63,7 +59,6 @@ async def test_create_city__fail(
         CityCreateSchemaTest(**invalid_city_data)
 
 
-@pytest.mark.asyncio(loop_scope="session")
 async def test_read_cities__success(city_service: CityService):
     cities = await city_service.read_cities()
 
@@ -85,7 +80,6 @@ async def test_read_cities__success(city_service: CityService):
         assert isinstance(city.requested, int)
 
 
-@pytest.mark.asyncio(loop_scope="session")
 async def test_read_city__success(
     city_service: CityService,
 ):
@@ -103,7 +97,6 @@ async def test_read_city__success(
     assert pattaya.requested == 2
 
 
-@pytest.mark.asyncio(loop_scope="session")
 @pytest.mark.parametrize(
     "invalid_city_id",
     [-1, "10", ["10", 1, 2], 1.1, None, "", "    ", {1: 1}, (1, 2), -0.123],
@@ -117,7 +110,6 @@ async def test_read_city__not_found(
         assert "City not found" == error.value
 
 
-@pytest.mark.asyncio(loop_scope="session")
 async def test_read_city_by_name__success(
     city_service: CityService,
 ):
@@ -135,7 +127,6 @@ async def test_read_city_by_name__success(
     assert pattaya.requested == 2
 
 
-@pytest.mark.asyncio(loop_scope="session")
 @pytest.mark.parametrize(
     "invalid_city_name",
     [-1, "10", ["10", 1, 2], 1.1, None, "", "   ", {1: 1}, (1, 2), -0.123, "M", 1],
@@ -150,7 +141,6 @@ async def test_read_city_by_name__not_found(
         assert "City not found" == error.value
 
 
-@pytest.mark.asyncio(loop_scope="session")
 async def test_update_city_requests_success(city_service: CityService):
     await city_service.create_city(CityCreateSchemaTest(name="Milan", requested=15))
     await city_service.create_city(CityCreateSchemaTest(name="Barcelona", requested=7))
@@ -163,7 +153,6 @@ async def test_update_city_requests_success(city_service: CityService):
     assert barcelona.requested == 8
 
 
-@pytest.mark.asyncio(loop_scope="session")
 @pytest.mark.parametrize(
     "invalid_city_id",
     [-1, "10", ["10", 1, 2], 1.1, None, "", "    ", {1: 1}, (1, 2), -0.123],
@@ -177,7 +166,6 @@ async def test_update_city_requests__fail(
         assert "City not found" == error.value
 
 
-@pytest.mark.asyncio(loop_scope="session")
 async def test_increase_requested_field__city_exists(
     city_service: CityService,
     city_name: str = "Bali",
@@ -193,7 +181,6 @@ async def test_increase_requested_field__city_exists(
         pass
 
 
-@pytest.mark.asyncio(loop_scope="session")
 @pytest.mark.parametrize(
     "invalid_city_name",
     [-1, "10", ["10", 1, 2], 1.1, None, "", "   ", {1: 1}, (1, 2), -0.123, "M", 1],

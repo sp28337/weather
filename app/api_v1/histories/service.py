@@ -2,10 +2,10 @@ from dataclasses import dataclass
 
 from app.api_v1.histories.schemas import (
     HistorySchema,
-    HistorySchemaBase,
     HistoryCreateSchema,
 )
 from app.api_v1.histories.repository import HistoryRepository
+from app.core.exceptions import HistoryCreateFailException
 
 
 @dataclass
@@ -17,7 +17,9 @@ class HistoryService:
         new_history: HistoryCreateSchema,
         last_history: HistorySchema | None = None,  # for tests
     ) -> HistorySchema | None:
-        if isinstance(new_history.user_id, str) and last_history is None:
+        if not isinstance(new_history, HistoryCreateSchema):
+            raise HistoryCreateFailException
+        if last_history is None:
             last_history: HistorySchema | None = (
                 await self.history_repo.read_last_history(user_id=new_history.user_id)
             )
@@ -28,12 +30,12 @@ class HistoryService:
         history = await self.history_repo.read_history(history_id=history_id)
         return HistorySchema.model_validate(history)
 
-    async def read_user_histories(self, user_id: str) -> list[HistorySchemaBase]:
+    async def read_user_histories(self, user_id: str) -> list[HistorySchema]:
         response = await self.history_repo.read_user_histories(user_id=user_id)
         histories = [HistorySchema.model_validate(history) for history in response]
         return histories
 
-    async def read_last_history(self, user_id: str) -> HistorySchema:
+    async def read_last_history(self, user_id: str) -> HistorySchema | None:
         history = await self.history_repo.read_last_history(user_id=user_id)
         if history is None:
             return None

@@ -4,8 +4,6 @@ from app.core.exceptions import CityNotFoundException
 from app.api_v1.cities.schemas import (
     CitySchema,
     CityCreateSchema,
-    CitySchemaBase,
-    CityUpdateSchema,
 )
 from app.api_v1.cities.repository import CityRepository
 
