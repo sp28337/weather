@@ -9,6 +9,5 @@ worker_class = UvicornWorker
 
 load_dotenv()
 env = os.path.join(os.getcwd(), ".env")
-print(f"env: {env}")
 if os.path.exists(env):
     load_dotenv(env)

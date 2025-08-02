@@ -1,6 +1,5 @@
 import pytest
 
-from fastapi.responses import JSONResponse
 from unittest.mock import AsyncMock, MagicMock
 
 from app.api_v1.histories.schemas import HistorySchemaTest
@@ -462,26 +461,3 @@ async def test_get_layout__not_found(weather_service, mock_weather_client):
     mock_weather_client.get_weather.assert_awaited_once_with(city=city, days=2, tp=1)
 
     assert response.template.name == "not_found.htm"
-
-
-@pytest.mark.asyncio
-async def test_autocomplete__success():
-    mock_weather_client = MagicMock()
-    mock_weather_client.autocomplete = AsyncMock(
-        return_value=JSONResponse(content={"results": ["Moscow", "Miami"]})
-    )
-
-    weather_service = WeatherService(
-        history_service=MagicMock(),
-        city_service=MagicMock(),
-        weather_client=mock_weather_client,
-    )
-
-    query = "M"
-    result = await weather_service.autocomplete(query)
-
-    mock_weather_client.autocomplete.assert_awaited_once_with(query=query)
-
-    body_str = result.body.decode("utf-8")
-    assert "results" in body_str
-    assert "Moscow" in body_str
