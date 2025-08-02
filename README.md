@@ -12,6 +12,11 @@ or by contacting me on Telegram @sp28337.
 - make docker (run the container)
 
 ---
+## Tests
+
+enter "pytest ." in terminal 
+
+---
 
 This solution follows industry best practices.
 **Technologies used:**  
@@ -30,7 +35,7 @@ This solution follows industry best practices.
 - [X] API for city input statistics
 - [X] Autocomplete for city input
 - [X] Docker container support
-- [ ] Tests (not yet implemented)
+- [X] Tests
 
 
 ## Screenshots
