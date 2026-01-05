@@ -1,5 +1,9 @@
 # 🌤 Python Developer Test Task — Week Weather
 
+This is **my third Python developer test task** - a **user-friendly weekly weather forecast web app** built with **FastAPI**.  
+It features search history, city statistics, autocomplete, and full Docker support. The project demonstrates **modern Python web development best practices**.
+
+
 ## Launch Instructions
 
 You need to create a .env file in the app/ directory and add the environment variable
